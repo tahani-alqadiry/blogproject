@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for post in posts %}
+
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        <h3>Author:{{ post.author}}</h3>
+        <p>category:{{ post.category}}</p>
+        <hr>
+    {% endfor %}
+
+    <h3>Categories:</h3>
+
+     {% for category in categories %}
+
+         <ul>
+
+            <li><a href="/posts/{{ category.id }}/"> {{ category.title }}</a></li>
+
+{#            <li>{{ category.title }}</li>#}
+
+         </ul>
+
+
+    {% endfor %}
+
+    <h3>users:</h3>
+
+    {% for user in users%}
+
+         <ul>
+            <li><a href="#">{{ user }}</a></li>
+
+         </ul>
+
+    {% endfor %}
+
+</body>
+</html>
