@@ -19,10 +19,8 @@
      {% for category in categories %}
 
          <ul>
+             <li><a href="{% url 'detail' category.id %}"> {{ category.title }}</a></li>
 
-            <li><a href="/posts/{{ category.id }}/"> {{ category.title }}</a></li>
-
-{#            <li>{{ category.title }}</li>#}
 
          </ul>
 
@@ -34,7 +32,7 @@
     {% for user in users%}
 
          <ul>
-            <li><a href="#">{{ user }}</a></li>
+            <li><a href="{% url 'profile_detail' user.username %}">{{ user }}</a></li>
 
          </ul>
 

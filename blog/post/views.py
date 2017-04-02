@@ -1,18 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from django.views import View
 from user_profile.models import User
 from .models import Post, Category
 
-class Profile(View):
-    def get(self, request,username):
-        params = {}
-        user = User.objects.get(username=username)
-        posts = Post.objects.filter(author=user)
-        params['posts'] = posts
-        params['author'] = user
 
-        return render(request, 'profile.html', params)
 
 class UsersPosts(View):
     def get(self, request):
@@ -25,6 +17,15 @@ class UsersPosts(View):
         params['categories'] = categories
         return render(request, 'index.html', params)
 
+
+class AllPosts(View):
+    def get(self, request):
+        params = {}
+        posts = Post.objects.all()
+        params['posts'] = posts
+        return render(request, 'posts.html', params)
+
+
 # class AllCateg(View):
 #     def get(self, request):
 #         params = {}
@@ -34,7 +35,8 @@ class UsersPosts(View):
 
 class Detail(View):
     def get(self,request, Category_id):
-        return HttpResponse('<h1>the details of the categorey'+Category_id+'</h1>')
+        category = get_object_or_404(Category, id=Category_id)
+        return render(request, 'categ_detail.html', {'category': category})
 
 
 
