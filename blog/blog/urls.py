@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from post.views import UsersPosts,Detail,AllPosts
+from post.views import UsersPosts,Detail,AllPosts,AllPostsD
 from user_profile.views import Profile
 from post import views
 
@@ -26,7 +26,8 @@ urlpatterns = [
     url(r'^$',UsersPosts.as_view()),
     url(r'^posts/(?P<Category_id>[0-9]+)/$', Detail.as_view(),name="detail"),
     url(r'^posts/$', AllPosts.as_view()),
-
+    # url(r'^(\d{4}-\d{2}-\d{2})/$',AllPostsD.as_view()),
+#
 
 
 ]
