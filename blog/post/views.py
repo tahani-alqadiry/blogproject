@@ -1,20 +1,17 @@
-from django.shortcuts import render,get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render,get_object_or_404,get_list_or_404
 from django.views import View
 from user_profile.models import User
 from .models import Post, Category
 
 
 
-class UsersPosts(View):
+class Index(View):
     def get(self, request):
         params = {}
         posts = Post.objects.all().order_by('-release_date')
         users = User.objects.all()
         categories = Category.objects.all()
         params['posts'] = posts
-        sort_params = []
-
         params['users'] = users
         params['categories'] = categories
         return render(request, 'index.html', params)
@@ -28,11 +25,32 @@ class AllPosts(View):
         return render(request, 'posts.html', params)
 
 
-class AllPostsD(View):
-    def get(self, request):
-        # posts = get_object_or_404(Post, id=int(post_date)).order_by('-release_date')
-        posts = Post.objects.all().order_by('-release_date')
-        return render(request, 'posts.html', {'posts': posts})
+class Blog(View):
+    def get(self, request, blogname):
+        content = {}
+        blog = User.objects.get(blog_name=blogname)
+        posts = blog.post_set.all().order_by('-release_date')
+        content['blog'] = blog
+        content['posts'] = posts
+        return render(request, 'user_blog.html',content)
+
+
+# class Blog_content(View):
+#     def get(self, request, username):
+#         params = {}
+#         user = User.objects.get(username=username)
+#         posts = Post.objects.filter(author=user).order_by('-release_date')
+#         params['posts'] = posts
+#         params['author'] = user
+#         return render(request,'user_blog.html', params)
+
+
+
+class Blog_content(View):
+    def get(self, request,username):
+        author = get_list_or_404(User, username=username)
+        return render(request, 'user_blog.html', {'author': author})
+
 
 class Detail(View):
     def get(self,request, Category_id):
