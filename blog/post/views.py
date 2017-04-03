@@ -68,17 +68,6 @@ class Create_post(View):
 
 
 
-class Delete_post(View):
-    def get(self,request,post_name):
-        try:
-            obj = Post.objects.get(title=post_name).delete()
-            content = {}
-            content['msg'] = "The post is deleted!"
-            return render(request, 'delete.html', content)
-        except Post.DoesNotExist:
-            content = {}
-            content['msg'] = "The post doesn't exist!"
-            return render(request, 'delete.html', content)
 
 
 
